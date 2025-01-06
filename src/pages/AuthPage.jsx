@@ -15,6 +15,8 @@ export default function AuthPage() {
     const handleShowLogin = () => setModalShow("Login");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
 
     const navigate = useNavigate();
     const auth = getAuth();
@@ -37,6 +39,7 @@ export default function AuthPage() {
             );
             console.log(res.user)
         } catch (error) {
+            setErrorMessage("Failed to create an account. Please check your details and try again.");
             console.error(error);
         }
     };
@@ -56,6 +59,7 @@ export default function AuthPage() {
         try {
             await signInWithEmailAndPassword(auth, username, password);
         } catch (error) {
+            setErrorMessage("Incorrect username or password. Please try again.");
             console.error(error);
         }
     };
@@ -97,6 +101,7 @@ export default function AuthPage() {
                             {modalShow === "SignUp" ? "Create your account" : "Login to your account"}
                         </h2>
                         <Form className="d-grid gap-2 px-5" onSubmit={modalShow === "SignUp" ? handleSignUp : handleLogin}>
+                            {errorMessage && <p className="text-danger">{errorMessage}</p>} {/* Error message */}
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Control onChange={(e) => setUsername(e.target.value)} type="email" placeholder="Enter username" />
                             </Form.Group>

@@ -11,8 +11,8 @@ export function AuthProvider({ children }) {
         return auth.onAuthStateChanged((user) => {
             setCurrentUser(user);
             setLoading(false);
-        })
-    }, [])
+        });
+    }, []);
 
     const value = { currentUser };
 
@@ -20,5 +20,5 @@ export function AuthProvider({ children }) {
         <AuthContext.Provider value={value}>
             {!loading && children}
         </AuthContext.Provider>
-    )
+    );
 }
